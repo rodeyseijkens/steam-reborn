@@ -25,8 +25,6 @@ const theme = createMuiTheme({
     gradient: {
       primary: '#192334',
       secondary: '#171e26',
-      primaryOpaque: '#19233499',
-      secondaryOpaque: '#171e2699',
     },
   },
 });
