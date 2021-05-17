@@ -1,0 +1,129 @@
+[
+  {
+    "steamId": 1,
+    "name": "El Macho Nacho",
+    "nickname": "Bandy",
+    "picture": "https://app.rodey.nl/steam/assets/img/profiles/006.jpg",
+    "status": "online",
+    "categories": ["Dutch Dota"]
+  },
+  {
+    "steamId": 2,
+    "name": "JayPain",
+    "picture": "https://app.rodey.nl/steam/assets/img/profiles/007.jpg",
+    "status": "playing",
+    "playing": "Dota 2",
+    "categories": ["Dutch Dota"]
+  },
+  {
+    "steamId": 3,
+    "name": "John Doe",
+    "status": "online",
+    "categories": ["Dutch Dota"]
+  },
+  {
+    "steamId": 4,
+    "name": "Kunstgras",
+    "picture": "https://app.rodey.nl/steam/assets/img/profiles/005.jpg",
+    "status": "playing",
+    "playing": "Dota 2",
+    "categories": ["Dutch Dota"]
+  },
+  {
+    "steamId": 5,
+    "name": "John Doe",
+    "status": "offline",
+    "categories": ["Dutch Dota"]
+  },
+  {
+    "steamId": 6,
+    "name": "John Doe",
+    "status": "offline",
+    "categories": ["Dutch Dota"]
+  },
+  {
+    "steamId": 7,
+    "name": "Darth Timbo",
+    "picture": "https://app.rodey.nl/steam/assets/img/profiles/008.jpg",
+    "status": "online"
+  },
+  {
+    "steamId": 8,
+    "name": "Henkmans",
+    "nickname": "Roel",
+    "picture": "https://app.rodey.nl/steam/assets/img/profiles/004.jpg",
+    "status": "playing",
+    "playing": "Dota 2"
+  },
+  {
+    "steamId": 9,
+    "name": "John Doe",
+    "status": "snooze"
+  },
+  {
+    "steamId": 10,
+    "name": "Sjoemi",
+    "nickname": "Roel",
+    "picture": "https://app.rodey.nl/steam/assets/img/profiles/002.jpg",
+    "status": "playing",
+    "playing": "Counter Strike: Global Offensive"
+  },
+  {
+    "steamId": 11,
+    "name": "Ziggy",
+    "nickname": "Grace",
+    "picture": "https://app.rodey.nl/steam/assets/img/profiles/003.jpg",
+    "status": "online",
+    "badge": 2
+  },
+  {
+    "steamId": 12,
+    "name": "John Doe",
+    "status": "offline"
+  },
+  {
+    "steamId": 13,
+    "name": "John Doe",
+    "status": "offline"
+  },
+  {
+    "steamId": 14,
+    "name": "John Doe",
+    "status": "offline"
+  },
+  {
+    "steamId": 15,
+    "name": "John Doe",
+    "status": "offline"
+  },
+  {
+    "steamId": 16,
+    "name": "John Doe",
+    "status": "offline"
+  },
+  {
+    "steamId": 17,
+    "name": "John Doe",
+    "status": "offline"
+  },
+  {
+    "steamId": 18,
+    "name": "John Doe",
+    "status": "offline"
+  },
+  {
+    "steamId": 19,
+    "name": "John Doe",
+    "status": "offline"
+  },
+  {
+    "steamId": 20,
+    "name": "John Doe",
+    "status": "offline"
+  },
+  {
+    "steamId": 21,
+    "name": "John Doe",
+    "status": "offline"
+  }
+]

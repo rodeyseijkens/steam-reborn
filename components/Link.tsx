@@ -93,7 +93,7 @@ const useStyles = makeStyles(
 
 // A styled version of the Next.js Link component:
 // https://nextjs.org/docs/#with-link
-const Link = (props: LinkProps) => {
+export default function Link(props: LinkProps) {
   const {
     activeClassName = 'active',
     className: classNameProps,
@@ -106,29 +106,27 @@ const Link = (props: LinkProps) => {
     component,
     ...other
   } = props;
-
   const classes = useStyles();
   const router = useRouter();
   const pathname = typeof other.href === 'string' ? other.href : other.href?.pathname;
-
   const { isFocusVisible, onBlurVisible, ref: focusVisibleRef } = useIsFocusVisible();
   const [focusVisible, setFocusVisible] = useState(false);
   const handlerRef = useForkRef(innerRef, focusVisibleRef);
-
   const handleBlur = (event: FocusEvent<HTMLAnchorElement>) => {
     if (focusVisible) {
       onBlurVisible();
       setFocusVisible(false);
     }
+
     if (onBlur) {
       onBlur(event);
     }
   };
-
   const handleFocus = (event: FocusEvent<HTMLAnchorElement>) => {
     if (isFocusVisible(event)) {
       setFocusVisible(true);
     }
+
     if (onFocus) {
       onFocus(event);
     }
@@ -146,7 +144,7 @@ const Link = (props: LinkProps) => {
     );
   }
 
-  const underline = `underline${capitalize(underlineProp)}` as ClassUnderlineType; // TODO: Look into better Lodash typing
+  const underline = `underline${capitalize(underlineProp)}` as ClassUnderlineType;
 
   return (
     <Typography
@@ -164,6 +162,4 @@ const Link = (props: LinkProps) => {
       {...other}
     />
   );
-};
-
-export default Link;
+}

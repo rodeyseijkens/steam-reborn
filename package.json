@@ -12,11 +12,17 @@
   },
   "dependencies": {
     "@material-ui/core": "^4.11.4",
+    "@material-ui/lab": "^4.0.0-alpha.58",
     "clsx": "^1.1.1",
+    "deepmerge": "^4.2.2",
+    "framer-motion": "^4.1.16",
     "lodash": "^4.17.21",
     "next": "^10.2.0",
     "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react-dom": "^17.0.2",
+    "react-feather": "^2.0.9",
+    "react-intersection-observer": "^8.32.0",
+    "react-query": "^3.16.0"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.169",
@@ -24,6 +30,7 @@
     "@types/node": "^15.0.3",
     "@types/react": "^17.0.5",
     "@types/react-dom": "^17.0.5",
+    "@types/react-query": "^1.1.2",
     "@typescript-eslint/eslint-plugin": "^4.23.0",
     "@typescript-eslint/parser": "^4.23.0",
     "babel-plugin-module-resolver": "^4.1.0",

@@ -3,15 +3,18 @@ import React from 'react';
 import { ServerStyleSheets } from '@material-ui/core/styles';
 import Document, { Html, Head, Main, NextScript } from 'next/document';
 
-import theme from '../src/components/global/theme';
+import theme from '../constants/theme';
 
 export default class MyDocument extends Document {
   render() {
     return (
       <Html lang="en">
         <Head>
+          <title>Steam Reborn</title>
           {/* PWA primary color */}
           <meta name="theme-color" content={theme.palette.primary.main} />
+          <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
+          <link href="https://fonts.googleapis.com/css2?family=Titillium+Web&display=swap" rel="stylesheet" />
         </Head>
         <body>
           <Main />

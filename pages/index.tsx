@@ -1,58 +1,49 @@
+import { ChangeEvent, useState } from 'react';
+
+import { Box, Checkbox, FormControl, FormControlLabel, MenuItem, Select } from '@material-ui/core';
 import { NextPage } from 'next';
 
-import FriendListProfile, {
-  FriendListProfileProps,
-} from '../src/components/elements/FriendListProfile/FriendListProfile';
+import FriendList, { FriendListProps } from '../components/FriendList';
+import { FriendListProfileProps } from '../components/FriendListProfile';
 
-const FriendList: FriendListProfileProps[] = [
-  {
-    steamid: 1,
-    name: 'Darth Timbo',
-    picture: 'https://app.rodey.nl/steam/assets/img/profiles/008.jpg',
-    status: 'online',
-  },
-  {
-    steamid: 2,
-    name: 'Henkmans',
-    nickname: 'Roel',
-    picture: 'https://app.rodey.nl/steam/assets/img/profiles/004.jpg',
-    status: 'playing',
-    playing: 'Dota 2',
-  },
-  {
-    steamid: 3,
-    name: 'John Doe',
-    status: 'online',
-  },
-  {
-    steamid: 4,
-    name: 'Sjoemi',
-    nickname: 'Roel',
-    picture: 'https://app.rodey.nl/steam/assets/img/profiles/002.jpg',
-    status: 'playing',
-    playing: 'Counter Strike: Global Offensive',
-  },
-  {
-    steamid: 5,
-    name: 'Ziggy',
-    nickname: 'Grace',
-    picture: 'https://app.rodey.nl/steam/assets/img/profiles/003.jpg',
-    status: 'online',
-    badge: 2,
-  },
-  {
-    steamid: 6,
-    name: 'John Doe',
-    status: 'offline',
-  },
-];
+const HomePage: NextPage = () => {
+  const [size, setSize] = useState<FriendListProfileProps['size']>('big');
+  const [hideOffline, setHideOffline] = useState<FriendListProps['hideOffline']>(false);
+  const [showInFriends, setShowInFriends] = useState<FriendListProps['showInFriends']>(false);
+  const handleChange = (event: ChangeEvent<{ value: unknown }>) => {
+    setSize(event.target.value as FriendListProfileProps['size']);
+  };
+  const toggleOffline = () => {
+    setHideOffline((prev) => !prev);
+  };
+  const toggleShowInFriends = () => {
+    setShowInFriends((prev) => !prev);
+  };
 
-const HomePage: NextPage = () => (
-  <>
-    {FriendList.map((friendInfo) => (
-      <FriendListProfile key={friendInfo.steamid} {...friendInfo} />
-    ))}
-  </>
-);
+  return (
+    <>
+      <Box width={550} display="flex" justifyContent="space-evenly">
+        <FormControlLabel
+          labelPlacement="start"
+          control={<Checkbox checked={hideOffline} onChange={toggleOffline} />}
+          label="hide offline"
+        />
+        <FormControlLabel
+          labelPlacement="start"
+          control={<Checkbox checked={showInFriends} onChange={toggleShowInFriends} />}
+          label="show all in friends"
+        />
+        <FormControl variant="outlined">
+          <Select value={size} onChange={handleChange}>
+            <MenuItem value="big">Big</MenuItem>
+            <MenuItem value="small">Small</MenuItem>
+            <MenuItem value="text">Text only</MenuItem>
+          </Select>
+        </FormControl>
+      </Box>
+      <FriendList size={size} hideOffline={hideOffline} showInFriends={showInFriends} />
+    </>
+  );
+};
 
 export default HomePage;
