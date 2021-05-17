@@ -3,15 +3,17 @@ import { ChangeEvent, useState } from 'react';
 import { Box, Checkbox, FormControl, FormControlLabel, MenuItem, Select } from '@material-ui/core';
 import { NextPage } from 'next';
 
-import FriendList, { FriendListProps } from '../components/FriendList';
-import { FriendListProfileProps } from '../components/FriendListProfile';
+import FriendList from '../components/FriendList';
+import { FriendListProfileSizes } from '../components/FriendListProfile';
+import FriendListContext from '../context/FriendListContext';
 
 const HomePage: NextPage = () => {
-  const [size, setSize] = useState<FriendListProfileProps['size']>('big');
-  const [hideOffline, setHideOffline] = useState<FriendListProps['hideOffline']>(false);
-  const [showInFriends, setShowInFriends] = useState<FriendListProps['showInFriends']>(false);
+  const [size, setSize] = useState<FriendListProfileSizes>('big');
+  const [hideOffline, setHideOffline] = useState(false);
+  const [showInFriends, setShowInFriends] = useState(false);
+  const [collapsed, setCollaped] = useState(false);
   const handleChange = (event: ChangeEvent<{ value: unknown }>) => {
-    setSize(event.target.value as FriendListProfileProps['size']);
+    setSize(event.target.value as FriendListProfileSizes);
   };
   const toggleOffline = () => {
     setHideOffline((prev) => !prev);
@@ -19,10 +21,13 @@ const HomePage: NextPage = () => {
   const toggleShowInFriends = () => {
     setShowInFriends((prev) => !prev);
   };
+  const toggleCollapse = () => {
+    setCollaped((prev) => !prev);
+  };
 
   return (
     <>
-      <Box width={550} display="flex" justifyContent="space-evenly">
+      <Box width="100%" display="flex" justifyContent="space-evenly">
         <FormControlLabel
           labelPlacement="start"
           control={<Checkbox checked={hideOffline} onChange={toggleOffline} />}
@@ -33,6 +38,11 @@ const HomePage: NextPage = () => {
           control={<Checkbox checked={showInFriends} onChange={toggleShowInFriends} />}
           label="show all in friends"
         />
+        <FormControlLabel
+          labelPlacement="start"
+          control={<Checkbox checked={collapsed} onChange={toggleCollapse} />}
+          label="collapse"
+        />
         <FormControl variant="outlined">
           <Select value={size} onChange={handleChange}>
             <MenuItem value="big">Big</MenuItem>
@@ -41,7 +51,16 @@ const HomePage: NextPage = () => {
           </Select>
         </FormControl>
       </Box>
-      <FriendList size={size} hideOffline={hideOffline} showInFriends={showInFriends} />
+      <FriendListContext.Provider
+        value={{
+          size,
+          hideOffline,
+          showInFriends,
+          collapsed,
+        }}
+      >
+        <FriendList />
+      </FriendListContext.Provider>
     </>
   );
 };

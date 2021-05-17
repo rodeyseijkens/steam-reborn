@@ -5,7 +5,6 @@ import { AnimatePresence, motion } from 'framer-motion';
 
 import * as animations from '../constants/animations';
 import useAriaClick from '../hooks/useAriaClick';
-import { FriendListProfileProps } from './FriendListProfile';
 import FriendListProfileProvider from './FriendListProfileProvider';
 import Icon from './Icon';
 
@@ -13,7 +12,6 @@ export type FriendListCategoryProps = {
   index: number;
   category: string;
   steamIds?: number[];
-  size?: FriendListProfileProps['size'];
 };
 
 type StyleProps = Pick<FriendListCategoryProps, 'index'>;
@@ -47,7 +45,7 @@ const useStyles = makeStyles(
 const MotionIcon = motion(Icon);
 
 export default function FriendListCategory(props: FriendListCategoryProps) {
-  const { category, steamIds = [], size, index } = props;
+  const { category, steamIds = [], index } = props;
   const [isOpen, setOpen] = useState(true);
   const classes = useStyles({ index });
   const toggleOpen = () => setOpen((prev) => !prev);
@@ -74,7 +72,7 @@ export default function FriendListCategory(props: FriendListCategoryProps) {
             <AnimatePresence initial={false}>
               {steamIds.map((steamId) => (
                 <motion.div key={`${category}-${steamId}`} {...animations.collapse}>
-                  <FriendListProfileProvider steamId={steamId} size={size} />
+                  <FriendListProfileProvider steamId={steamId} />
                 </motion.div>
               ))}
             </AnimatePresence>

@@ -1,18 +1,12 @@
-import { useMemo } from 'react';
+import { useContext, useMemo } from 'react';
 
 import { makeStyles } from '@material-ui/core';
 import clsx from 'clsx';
 import deepmerge from 'deepmerge';
 
+import FriendListContext from '../context/FriendListContext';
 import useFriends from '../hooks/useFriends';
 import FriendListCategory from './FriendListCategory';
-import { FriendListProfileProps } from './FriendListProfile';
-
-export type FriendListProps = {
-  size?: FriendListProfileProps['size'];
-  hideOffline?: boolean;
-  showInFriends?: boolean;
-};
 
 type FriendCategorieSteamIds = { [key: string]: Array<number> };
 
@@ -23,15 +17,15 @@ const useStyles = makeStyles(
       position: 'relative',
       overflowY: 'auto',
       overflowX: 'hidden',
-      width: '30vw',
+      width: 'auto',
     },
   }),
   { name: 'FriendList' },
 );
 const DefaultFriendsCategory = 'Friends';
 
-export default function FriendList(props: FriendListProps) {
-  const { size, hideOffline = false, showInFriends = false } = props;
+export default function FriendList() {
+  const { hideOffline = false, showInFriends = false } = useContext(FriendListContext);
   const classes = useStyles();
   const { data, status: dataStatus } = useFriends();
   // Create a object with categories
@@ -61,7 +55,7 @@ export default function FriendList(props: FriendListProps) {
   return (
     <div className={clsx(classes.root)}>
       {Object.entries(categoriesWithSteamIds).map(([category, steamIds], index) => (
-        <FriendListCategory key={category} steamIds={steamIds} category={category} index={index} size={size} />
+        <FriendListCategory key={category} steamIds={steamIds} category={category} index={index} />
       ))}
     </div>
   );

@@ -6,6 +6,9 @@ import clsx from 'clsx';
 
 import Link from './Link';
 
+export type FriendListProfileSizes = 'big' | 'small' | 'text';
+export type FriendListProfileStatus = 'offline' | 'online' | 'snooze' | 'playing';
+
 export type FriendListProfileProps = {
   steamId: number;
   badge?: string | number;
@@ -14,8 +17,9 @@ export type FriendListProfileProps = {
   nickname?: string;
   picture?: string;
   playing?: string;
-  size?: 'big' | 'small' | 'text';
-  status?: 'offline' | 'online' | 'snooze' | 'playing';
+  size?: FriendListProfileSizes;
+  status?: FriendListProfileStatus;
+  collapsed?: boolean;
   isLoading?: boolean;
 };
 

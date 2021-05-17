@@ -1,13 +1,13 @@
-import { forwardRef, Ref } from 'react';
+import { forwardRef, Ref, useContext } from 'react';
 
 import { useForkRef } from '@material-ui/core';
 import { useInView } from 'react-intersection-observer';
 
+import FriendListContext from '../context/FriendListContext';
 import useFriendProfile from '../hooks/useFriendProfile';
 import FriendListProfile, { FriendListProfileProps } from './FriendListProfile';
 
 export type FriendListProfileProviderProps = {
-  size?: FriendListProfileProps['size'];
   steamId: FriendListProfileProps['steamId'];
 };
 
@@ -15,7 +15,8 @@ export default forwardRef<HTMLDivElement, FriendListProfileProviderProps>(functi
   props,
   refProp,
 ) {
-  const { steamId, size } = props;
+  const { steamId } = props;
+  const { size, collapsed = false } = useContext(FriendListContext);
   const [ref, inView] = useInView({
     triggerOnce: true,
   });
@@ -25,6 +26,13 @@ export default forwardRef<HTMLDivElement, FriendListProfileProviderProps>(functi
   if (error) console.error(error);
 
   return (
-    <FriendListProfile {...data} size={size} steamId={steamId} isLoading={isLoading || !isSuccess} ref={innerRef} />
+    <FriendListProfile
+      {...data}
+      size={size}
+      steamId={steamId}
+      isLoading={isLoading || !isSuccess}
+      collapsed={collapsed}
+      ref={innerRef}
+    />
   );
 });
