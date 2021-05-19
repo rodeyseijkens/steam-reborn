@@ -31,9 +31,16 @@ const useStyles = makeStyles(
       top: ({ index }: StyleProps) => theme.spacing(index * 6.5),
       zIndex: 1,
       cursor: 'pointer',
+      '& > h2': {
+        whiteSpace: 'nowrap',
+        textOverflow: 'ellipsis',
+        flexGrow: 1,
+        overflow: 'hidden',
+      },
     },
     icon: {
-      marginRight: theme.spacing(2),
+      marginRight: theme.spacing(1.5),
+      flexShrink: 0,
     },
     category: {
       padding: theme.spacing(1, 0),

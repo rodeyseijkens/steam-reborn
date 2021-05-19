@@ -11,21 +11,43 @@ import FriendListCategory from './FriendListCategory';
 type FriendCategorieSteamIds = { [key: string]: Array<number> };
 
 const useStyles = makeStyles(
-  () => ({
+  (theme) => ({
     root: {
       height: '80vh',
       position: 'relative',
       overflowY: 'auto',
       overflowX: 'hidden',
       width: 'auto',
+      maxWidth: '100%',
+      transition: 'max-width 0.2s',
     },
+    /* Style for when the prop size = big */
+    big: {
+      '&$collapsed': {
+        maxWidth: theme.spacing(21),
+      },
+    },
+    /* Style for when the prop size = small */
+    small: {
+      '&$collapsed': {
+        maxWidth: theme.spacing(15),
+      },
+    },
+    /* Style for when the prop size = big */
+    text: {
+      '&$collapsed': {
+        maxWidth: theme.spacing(15),
+      },
+    },
+    /* Psuedo class for when the prop collapsed = true */
+    collapsed: {},
   }),
   { name: 'FriendList' },
 );
 const DefaultFriendsCategory = 'Friends';
 
 export default function FriendList() {
-  const { hideOffline = false, showInFriends = false } = useContext(FriendListContext);
+  const { hideOffline = false, showInFriends = false, collapsed, size } = useContext(FriendListContext);
   const classes = useStyles();
   const { data, status: dataStatus } = useFriends();
   // Create a object with categories
@@ -53,7 +75,7 @@ export default function FriendList() {
   }, [data, dataStatus, hideOffline, showInFriends]);
 
   return (
-    <div className={clsx(classes.root)}>
+    <div className={clsx(classes.root, classes[size], { [classes.collapsed]: collapsed })}>
       {Object.entries(categoriesWithSteamIds).map(([category, steamIds], index) => (
         <FriendListCategory key={category} steamIds={steamIds} category={category} index={index} />
       ))}

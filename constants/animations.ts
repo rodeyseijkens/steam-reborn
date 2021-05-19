@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/prefer-default-export
 export const collapse = {
   transition: { duration: 0.3 },
   variants: {

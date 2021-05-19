@@ -49,7 +49,7 @@ const useStyles = makeStyles(
       lineHeight: 1,
       padding: theme.spacing(1, 1.5),
       position: 'absolute',
-      top: theme.spacing(2),
+      top: theme.spacing(1),
       zIndex: 1,
     },
     picture: {
@@ -104,6 +104,19 @@ const useStyles = makeStyles(
     gameInfo: {
       color: theme.palette.primary.light,
       marginLeft: theme.spacing(1),
+    },
+    skeleton: {
+      '$name &': {
+        maxWidth: '80%',
+        minWidth: '80px',
+      },
+      '$status &': {
+        maxWidth: '50%',
+        minWidth: '50px',
+      },
+      '&$picture': {
+        opacity: 0.5,
+      },
     },
     /* Psuedo class for when the prop size = big */
     big: {},
@@ -177,15 +190,35 @@ const useStyles = makeStyles(
         lineHeight: 1.3,
       },
     },
-    skeleton: {
-      '$name &': {
-        maxWidth: '80%',
+    /* Styling for when the prop collapsed = true */
+    collapsed: {
+      '& $picture': {},
+      '& $badge': {},
+      '& $container': {
+        opacity: 0,
       },
-      '$status &': {
-        maxWidth: '50%',
+
+      '&$small': {
+        '& $badge': {
+          left: theme.spacing(7),
+        },
       },
-      '&$picture': {
-        opacity: 0.5,
+
+      '&$text': {
+        '& $picture': {
+          visibility: 'unset',
+          position: 'relative',
+          height: theme.spacing(8),
+          width: theme.spacing(8),
+        },
+        '& $badge': {
+          fontSize: '0.625rem',
+          padding: theme.spacing(1, 1.5),
+          left: theme.spacing(7),
+          top: theme.spacing(0.5),
+          position: 'absolute',
+          lineHeight: 1,
+        },
       },
     },
   }),
@@ -202,14 +235,21 @@ export default forwardRef<HTMLDivElement, FriendListProfileProps>(function Frien
     size = 'small',
     status,
     steamId,
+    collapsed,
     isLoading = true,
     ...restProps
   } = props;
   const classes = useStyles({ size, status });
   const profileLink = `/profile/${steamId}`;
+  const titleName = isLoading ? 'loading' : `${name} - ${status}`;
 
   return (
-    <div className={clsx(classes.root, classes[size])} ref={ref} {...restProps}>
+    <div
+      title={titleName}
+      className={clsx(classes.root, classes[size], { [classes.collapsed]: collapsed })}
+      ref={ref}
+      {...restProps}
+    >
       {badge && (
         <Typography variant="caption" className={classes.badge}>
           {badge}

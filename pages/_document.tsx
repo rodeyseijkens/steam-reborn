@@ -10,10 +10,8 @@ export default class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>
-          <title>Steam Reborn</title>
           {/* PWA primary color */}
           <meta name="theme-color" content={theme.palette.primary.main} />
-          <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
           <link href="https://fonts.googleapis.com/css2?family=Titillium+Web&display=swap" rel="stylesheet" />
         </Head>
         <body>
