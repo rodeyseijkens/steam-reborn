@@ -3,9 +3,10 @@ import { forwardRef, Ref, useContext } from 'react';
 import { useForkRef } from '@material-ui/core';
 import { useInView } from 'react-intersection-observer';
 
-import FriendListContext from '../context/FriendListContext';
+import FriendListContext, { FriendListContextType } from '../context/FriendListContext';
 import useFriendProfile from '../hooks/useFriendProfile';
-import FriendListProfile, { FriendListProfileProps } from './FriendListProfile';
+import { FriendListProfileProps } from '../types/FriendListProfile';
+import FriendListProfile from './FriendListProfile';
 
 export type FriendListProfileProviderProps = {
   steamId: FriendListProfileProps['steamId'];
@@ -16,7 +17,7 @@ export default forwardRef<HTMLDivElement, FriendListProfileProviderProps>(functi
   refProp,
 ) {
   const { steamId } = props;
-  const { size, collapsed = false } = useContext(FriendListContext);
+  const { size, collapsed = false } = useContext<FriendListContextType>(FriendListContext);
   const [ref, inView] = useInView({
     triggerOnce: true,
   });

@@ -49,7 +49,6 @@ const useStyles = makeStyles(
   }),
   { name: 'FriendListCategory' },
 );
-const MotionIcon = motion(Icon);
 
 export default function FriendListCategory(props: FriendListCategoryProps) {
   const { category, steamIds = [], index } = props;
@@ -61,13 +60,14 @@ export default function FriendListCategory(props: FriendListCategoryProps) {
   return (
     <>
       <header {...ariaClickProps} className={classes.header} tabIndex={index} role="tab" aria-labelledby={category}>
-        <MotionIcon
-          name="ChevronDown"
+        <motion.div
           className={classes.icon}
           {...animations.collapseChevron}
           animate={isOpen ? 'open' : 'collapsed'}
           initial={isOpen ? 'open' : 'collapsed'}
-        />
+        >
+          <Icon icon="chevron-down" />
+        </motion.div>
         <Typography variant="subtitle1" component="h2">
           {category}
         </Typography>

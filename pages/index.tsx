@@ -3,9 +3,9 @@ import { ChangeEvent, useState } from 'react';
 import { Box, Checkbox, FormControl, FormControlLabel, MenuItem, Select } from '@material-ui/core';
 import { NextPage } from 'next';
 
-import FriendList from '../components/FriendList';
-import { FriendListProfileSizes } from '../components/FriendListProfile';
+import RightPanel from '../components/RightPanel';
 import FriendListContext from '../context/FriendListContext';
+import { FriendListProfileSizes } from '../types/FriendListProfile';
 
 const HomePage: NextPage = () => {
   const [size, setSize] = useState<FriendListProfileSizes>('big');
@@ -59,7 +59,7 @@ const HomePage: NextPage = () => {
           collapsed,
         }}
       >
-        <FriendList />
+        <RightPanel />
       </FriendListContext.Provider>
     </>
   );

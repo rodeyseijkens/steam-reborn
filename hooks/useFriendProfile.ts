@@ -1,7 +1,7 @@
 import { useQuery, UseQueryOptions } from 'react-query';
 
-import { FriendListProfileProps } from '../components/FriendListProfile';
 import friends from '../mock/friends.json';
+import { FriendListProfileProps } from '../types/FriendListProfile';
 
 const getProfileData = async (steamId: number) => {
   const result = friends.find((friend) => friend.steamId === steamId);

@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 
-import { FriendListProfileSizes } from '../components/FriendListProfile';
+import { FriendListProfileSizes } from '../types/FriendListProfile';
 
 export type FriendListContextType = {
   size: FriendListProfileSizes;

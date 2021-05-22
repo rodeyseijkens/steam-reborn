@@ -64,9 +64,12 @@ const theme = createMuiTheme({
     error: {
       main: red.A400,
     },
+    success: {
+      main: '#75b022',
+    },
     background: {
       default: '#606d7b',
-      paper: '#8c8c8c',
+      paper: '#192334',
     },
     gradient: {
       primary: '#192334',
@@ -77,6 +80,19 @@ const theme = createMuiTheme({
       secondary: '#8c8c8c',
       disabled: `#8c8c8c${toHex(5)}`,
       hint: '#67c1f5',
+    },
+    action: {
+      active: 'rgba(255, 255, 255, 0.54)',
+      hover: 'rgba(255, 255, 255, 0.04)',
+      hoverOpacity: 0.04,
+      selected: 'rgba(255, 255, 255, 0.08)',
+      selectedOpacity: 0.08,
+      disabled: 'rgba(255, 255, 255, 0.26)',
+      disabledBackground: 'rgba(255, 255, 255, 0.12)',
+      disabledOpacity: 0.38,
+      focus: 'rgba(255, 255, 255, 0.12)',
+      focusOpacity: 0.12,
+      activatedOpacity: 0.12,
     },
   }),
   toHex,

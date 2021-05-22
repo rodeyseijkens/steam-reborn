@@ -3,27 +3,15 @@ import { forwardRef } from 'react';
 import { makeStyles, Theme, Typography } from '@material-ui/core';
 import { Skeleton } from '@material-ui/lab';
 import clsx from 'clsx';
+import { capitalize } from 'lodash';
 
-import Link from './Link';
-
-export type FriendListProfileSizes = 'big' | 'small' | 'text';
-export type FriendListProfileStatus = 'offline' | 'online' | 'snooze' | 'playing';
-
-export type FriendListProfileProps = {
-  steamId: number;
-  badge?: string | number;
-  categories?: Array<string>;
-  name?: string;
-  nickname?: string;
-  picture?: string;
-  playing?: string;
-  size?: FriendListProfileSizes;
-  status?: FriendListProfileStatus;
-  collapsed?: boolean;
-  isLoading?: boolean;
-};
+import { FriendListProfileProps } from '../types/FriendListProfile';
+import { ProfileProps } from '../types/Profile';
+import Icon from './Icon';
 
 type StyleProps = Pick<FriendListProfileProps, 'status' | 'size'>;
+
+type ClassStatusType = `status${Capitalize<ProfileProps['status']>}`;
 
 const useStyles = makeStyles(
   (theme: Theme) => ({
@@ -31,12 +19,14 @@ const useStyles = makeStyles(
       boxSizing: 'border-box',
       display: 'flex',
       padding: theme.spacing(2),
+      transition: 'background-color 0.2s ease-in-out',
       position: 'relative',
-      transition: 'background-color 0.2s',
       flex: 1,
       flexShrink: 0,
+      backgroundColor: 'transparent',
       '&:hover': {
-        backgroundColor: `${theme.palette.background.default}${theme.toHex(20)}`,
+        transitionDuration: '0s',
+        backgroundColor: theme.palette.action.hover,
         cursor: 'pointer',
       },
     },
@@ -55,18 +45,38 @@ const useStyles = makeStyles(
     picture: {
       borderRadius: '50%',
       height: theme.spacing(14),
-      opacity: (props: StyleProps) => (props.status === 'offline' ? 0.5 : 2),
+      opacity: (props: StyleProps) => (props.status === 'offline' ? 0.3 : 1),
       position: 'relative',
       transition: 'width 0.2s, height 0.2s, opacity 0.2s',
       width: theme.spacing(14),
       backgroundImage: 'url("/profile/default.jpg")',
       backgroundSize: 'cover',
       backgroundRepeat: 'no-repeat',
+      flexShrink: 0,
+      borderWidth: theme.spacing(0.5),
+      borderStyle: 'solid',
+      borderColor: 'transparent',
+
+      '$statusOnline &': {
+        borderColor: theme.palette.primary.main,
+      },
+
+      '$statusOffline &': {
+        borderColor: theme.palette.secondary.dark,
+      },
+
+      '$statusSnooze &': {
+        borderColor: theme.palette.primary.main,
+        opacity: 0.5,
+      },
+
+      '$statusPlaying &': {
+        borderColor: theme.palette.success.main,
+      },
     },
     container: {
       margin: theme.spacing(0, 0, 0, 3),
-      opacity: (props: StyleProps) => (props.status === 'offline' ? 0.5 : 2),
-      overflow: 'hidden',
+      opacity: (props: StyleProps) => (props.status === 'offline' ? 0.3 : 1),
       transition: 'opacity 0.2s',
       flex: 1,
       display: 'flex',
@@ -75,7 +85,6 @@ const useStyles = makeStyles(
     },
     name: {
       color: theme.palette.common.white,
-      overflow: 'hidden',
       textOverflow: 'ellipsis',
       transition: 'font-size 0.2s',
       whiteSpace: 'nowrap',
@@ -88,7 +97,6 @@ const useStyles = makeStyles(
     status: {
       color: theme.palette.secondary.main,
       margin: 0,
-      overflow: 'hidden',
       textOverflow: 'ellipsis',
       transition: 'font-size 0.2s',
       whiteSpace: 'nowrap',
@@ -101,8 +109,13 @@ const useStyles = makeStyles(
         zIndex: -1,
       },
     },
+    snoozeIcon: {
+      marginTop: theme.spacing(-1),
+      marginLeft: theme.spacing(1),
+      color: theme.palette.primary.main,
+    },
     gameInfo: {
-      color: theme.palette.primary.light,
+      color: theme.palette.success.main,
       marginLeft: theme.spacing(1),
     },
     skeleton: {
@@ -153,7 +166,6 @@ const useStyles = makeStyles(
         width: theme.spacing(5),
         visibility: 'hidden',
         position: 'absolute',
-        zIndex: -1,
       },
       '& $container': {
         marginLeft: 0,
@@ -221,6 +233,10 @@ const useStyles = makeStyles(
         },
       },
     },
+    statusOnline: {},
+    statusOffline: {},
+    statusSnooze: {},
+    statusPlaying: {},
   }),
   { name: 'FriendListProfile' },
 );
@@ -231,7 +247,7 @@ export default forwardRef<HTMLDivElement, FriendListProfileProps>(function Frien
     name,
     nickname,
     picture = '/profile/default.jpg',
-    playing,
+    playing = '',
     size = 'small',
     status,
     steamId,
@@ -240,14 +256,15 @@ export default forwardRef<HTMLDivElement, FriendListProfileProps>(function Frien
     ...restProps
   } = props;
   const classes = useStyles({ size, status });
-  const profileLink = `/profile/${steamId}`;
-  const titleName = isLoading ? 'loading' : `${name} - ${status}`;
+  const titleName = isLoading ? 'loading' : `${name} - ${status} ${playing}`;
+  const statusType = `status${capitalize(status)}` as ClassStatusType;
 
   return (
     <div
       title={titleName}
-      className={clsx(classes.root, classes[size], { [classes.collapsed]: collapsed })}
+      className={clsx(classes.root, classes[statusType], classes[size], { [classes.collapsed]: collapsed })}
       ref={ref}
+      data-steamid={steamId}
       {...restProps}
     >
       {badge && (
@@ -269,11 +286,8 @@ export default forwardRef<HTMLDivElement, FriendListProfileProps>(function Frien
         <Typography variant="subtitle2" component="dd" className={classes.status}>
           {isLoading && <Skeleton variant="text" className={classes.skeleton} />}
           {status}
-          {playing && (
-            <Link href={profileLink} className={classes.gameInfo} variant="inherit">
-              {playing}
-            </Link>
-          )}
+          {playing && <a className={classes.gameInfo}>{playing}</a>}
+          {status === 'snooze' && <Icon icon="snooze" className={classes.snoozeIcon} title="Snooze you'll lose" />}
         </Typography>
       </dl>
     </div>
