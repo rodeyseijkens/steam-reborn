@@ -117,6 +117,10 @@ const useStyles = makeStyles(
     gameInfo: {
       color: theme.palette.success.main,
       marginLeft: theme.spacing(1),
+
+      '&:hover': {
+        textDecoration: 'underline',
+      },
     },
     skeleton: {
       '$name &': {
@@ -164,8 +168,8 @@ const useStyles = makeStyles(
       '& $picture': {
         height: theme.spacing(5),
         width: theme.spacing(5),
-        visibility: 'hidden',
         position: 'absolute',
+        zIndex: -1,
       },
       '& $container': {
         marginLeft: 0,
@@ -173,6 +177,7 @@ const useStyles = makeStyles(
         order: 1,
         flexDirection: 'row',
         justifyContent: 'flex-start',
+        alignItems: 'center',
       },
       '& $name': {
         fontSize: '0.825rem',
@@ -222,6 +227,7 @@ const useStyles = makeStyles(
           position: 'relative',
           height: theme.spacing(8),
           width: theme.spacing(8),
+          zIndex: 0,
         },
         '& $badge': {
           fontSize: '0.625rem',
@@ -262,7 +268,7 @@ export default forwardRef<HTMLDivElement, FriendListProfileProps>(function Frien
   return (
     <div
       title={titleName}
-      className={clsx(classes.root, classes[statusType], classes[size], { [classes.collapsed]: collapsed })}
+      className={clsx(classes.root, classes[size], { [classes[statusType]]: status, [classes.collapsed]: collapsed })}
       ref={ref}
       data-steamid={steamId}
       {...restProps}
@@ -287,7 +293,7 @@ export default forwardRef<HTMLDivElement, FriendListProfileProps>(function Frien
           {isLoading && <Skeleton variant="text" className={classes.skeleton} />}
           {status}
           {playing && <a className={classes.gameInfo}>{playing}</a>}
-          {status === 'snooze' && <Icon icon="snooze" className={classes.snoozeIcon} title="Snooze you'll lose" />}
+          {status === 'snooze' && <Icon icon="snooze" className={classes.snoozeIcon} title="You Snooze, you lose" />}
         </Typography>
       </dl>
     </div>

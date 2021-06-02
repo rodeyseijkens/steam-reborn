@@ -1,6 +1,7 @@
 import { useContext, useMemo } from 'react';
 
 import { makeStyles } from '@material-ui/core';
+import clsx from 'clsx';
 import deepmerge from 'deepmerge';
 
 import FriendListContext from '../context/FriendListContext';
@@ -9,21 +10,21 @@ import FriendListCategory from './FriendListCategory';
 
 type FriendCategorieSteamIds = { [key: string]: Array<number> };
 
+export type FriendListProps = {
+  className?: string;
+};
+
 const useStyles = makeStyles(
   {
     root: {
-      height: '80vh',
       position: 'relative',
-      overflowY: 'auto',
-      overflowX: 'hidden',
-      width: 'auto',
     },
   },
   { name: 'FriendList' },
 );
 const DefaultFriendsCategory = 'Friends';
 
-export default function FriendList() {
+export default function FriendList({ className }: FriendListProps) {
   const { hideOffline = false, showInFriends = false } = useContext(FriendListContext);
   const classes = useStyles();
   const { data, status: dataStatus } = useFriends();
@@ -52,7 +53,7 @@ export default function FriendList() {
   }, [data, dataStatus, hideOffline, showInFriends]);
 
   return (
-    <div className={classes.root}>
+    <div className={clsx(className, classes.root)}>
       {Object.entries(categoriesWithSteamIds).map(([category, steamIds], index) => (
         <FriendListCategory key={category} steamIds={steamIds} category={category} index={index} />
       ))}

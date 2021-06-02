@@ -11,6 +11,7 @@ import { ProfileProps } from '../types/Profile';
 
 type PanelProfileProps = {
   action?: ReactNode;
+  className?: string;
 };
 
 type StyleProps = {
@@ -22,29 +23,29 @@ type ClassStatusType = `status${Capitalize<ProfileProps['status']>}`;
 const useStyles = makeStyles(
   (theme) => ({
     root: {
-      maxWidth: '100%',
-      transition: 'max-width 0.2s',
       backgroundColor: 'rgba(0, 0, 0, 0.3)',
-      padding: theme.spacing(2),
       display: 'flex',
-      position: 'relative',
+      maxWidth: '100%',
       overflow: 'hidden',
+      padding: theme.spacing(2),
+      position: 'relative',
+      transition: 'max-width 0.2s',
+      alignItems: 'stretch',
     },
     picture: {
+      backgroundImage: 'url("/profile/default.jpg")',
+      backgroundRepeat: 'no-repeat',
+      backgroundSize: 'cover',
+      borderColor: 'transparent',
       borderRadius: theme.spacing(1),
+      borderStyle: 'solid',
+      borderWidth: theme.spacing(0.5),
+      flexShrink: 0,
+      width: theme.spacing(17),
+      height: theme.spacing(17),
       opacity: (props: StyleProps) => (props.isOffline ? 0.3 : 1),
       position: 'relative',
       transition: 'max-width 0.2s, width 0.2s, height 0.2s, opacity 0.2s',
-      maxWidth: theme.spacing(15),
-      width: '100%',
-      backgroundImage: 'url("/profile/default.jpg")',
-      backgroundSize: 'cover',
-      backgroundRepeat: 'no-repeat',
-      flexShrink: 0,
-      display: 'flex',
-      borderWidth: theme.spacing(0.5),
-      borderStyle: 'solid',
-      borderColor: 'transparent',
 
       '$statusOnline &': {
         borderColor: theme.palette.primary.main,
@@ -62,33 +63,47 @@ const useStyles = makeStyles(
       '$statusPlaying &': {
         borderColor: theme.palette.success.main,
       },
+
+      '&$skeleton ': {
+        opacity: 0.5,
+      },
     },
     container: {
-      margin: theme.spacing(0, 0, 0, 3),
+      display: 'flex',
+      flex: 1,
+      flexDirection: 'column',
+      justifyContent: 'space-evenly',
+      margin: 0,
       opacity: (props: StyleProps) => (props.isOffline ? 0.3 : 1),
       overflow: 'hidden',
       transition: 'opacity 0.2s',
-      flex: 1,
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'space-evenly',
+
+      '$collapsed &': {
+        opacity: 0,
+      },
     },
     name: {
       color: theme.palette.common.white,
+      lineHeight: 1.35,
       overflow: 'hidden',
       textOverflow: 'ellipsis',
       transition: 'font-size 0.2s',
       whiteSpace: 'nowrap',
-      lineHeight: 1.35,
+      marginLeft: theme.spacing(3),
+      '& > $skeleton ': {
+        maxWidth: '80%',
+        minWidth: '80px',
+      },
     },
     status: {
       color: theme.palette.secondary.main,
+      lineHeight: 1.2,
       margin: 0,
       overflow: 'hidden',
       textOverflow: 'ellipsis',
       transition: 'font-size 0.2s',
       whiteSpace: 'nowrap',
-      lineHeight: 1.2,
+      marginLeft: theme.spacing(3),
       '&:before': {
         content: '"-"',
         display: 'inline-block',
@@ -96,37 +111,28 @@ const useStyles = makeStyles(
         visibility: 'hidden',
         zIndex: -1,
       },
+      '& > $skeleton ': {
+        maxWidth: '50%',
+        minWidth: '50px',
+      },
     },
     gameInfo: {
       color: theme.palette.success.main,
       marginLeft: theme.spacing(1),
-    },
-    skeleton: {
-      '$name &': {
-        maxWidth: '80%',
-        minWidth: '80px',
-      },
-      '$status &': {
-        maxWidth: '50%',
-        minWidth: '50px',
-      },
-      '&$picture': {
-        opacity: 0.5,
+
+      '&:hover': {
+        textDecoration: 'underline',
       },
     },
+    skeleton: {},
     action: {
       color: theme.palette.common.white,
       position: 'absolute',
       top: 0,
       right: 0,
       transition: 'opacity 0.2s',
-    },
-    collapsed: {
-      '& $container': {
-        opacity: 0,
-      },
 
-      '& $action': {
+      '$collapsed &': {
         opacity: 0,
         borderRadius: '50%',
         display: 'flex',
@@ -143,6 +149,14 @@ const useStyles = makeStyles(
         },
       },
     },
+    collapsed: {
+      '&$small, &$text': {
+        '& > $picture': {
+          width: theme.spacing(11),
+          height: theme.spacing(11),
+        },
+      },
+    },
     statusOnline: {},
     statusOffline: {},
     statusSnooze: {},
@@ -155,7 +169,7 @@ const useStyles = makeStyles(
 );
 
 export default forwardRef<HTMLDivElement, PanelProfileProps>(function PanelProfile(props, ref) {
-  const { action } = props;
+  const { action, className } = props;
   const { collapsed, size } = useContext(FriendListContext);
   const { data, isLoading } = useProfile();
   const { name, picture, status, playing } = data || {};
@@ -166,11 +180,14 @@ export default forwardRef<HTMLDivElement, PanelProfileProps>(function PanelProfi
   return (
     <div
       title={titleName}
-      className={clsx(classes.root, classes[statusType], classes[size], { [classes.collapsed]: collapsed })}
+      className={clsx(className, classes.root, classes[size], {
+        [classes[statusType]]: status,
+        [classes.collapsed]: collapsed,
+      })}
       ref={ref}
     >
       {isLoading ? (
-        <Skeleton variant="circle" className={clsx(classes.picture, classes.skeleton)} />
+        <Skeleton variant="rect" className={clsx(classes.picture, classes.skeleton)} />
       ) : (
         <img className={classes.picture} src={picture} alt={`Profile ${name}`} />
       )}
