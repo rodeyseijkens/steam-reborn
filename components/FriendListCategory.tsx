@@ -29,7 +29,7 @@ const useStyles = makeStyles(
       padding: theme.spacing(0, 2),
       position: 'sticky',
       top: ({ index }: StyleProps) => theme.spacing(index * 6.5),
-      zIndex: 1,
+      zIndex: 2,
       cursor: 'pointer',
       '& > h2': {
         whiteSpace: 'nowrap',
