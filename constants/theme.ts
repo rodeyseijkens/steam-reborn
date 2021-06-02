@@ -82,20 +82,26 @@ const theme = createMuiTheme({
       hint: '#67c1f5',
     },
     action: {
-      active: 'rgba(255, 255, 255, 0.54)',
-      hover: 'rgba(255, 255, 255, 0.04)',
+      active: `#ffffff${toHex(54)}`,
+      hover: `#ffffff${toHex(4)}`,
       hoverOpacity: 0.04,
-      selected: 'rgba(255, 255, 255, 0.08)',
+      selected: `#ffffff${toHex(8)}`,
       selectedOpacity: 0.08,
-      disabled: 'rgba(255, 255, 255, 0.26)',
-      disabledBackground: 'rgba(255, 255, 255, 0.12)',
+      disabled: `#ffffff${toHex(26)}`,
+      disabledBackground: `#ffffff${toHex(12)}`,
       disabledOpacity: 0.38,
-      focus: 'rgba(255, 255, 255, 0.12)',
+      focus: `#ffffff${toHex(12)}`,
       focusOpacity: 0.12,
       activatedOpacity: 0.12,
     },
+    divider: '#505050',
   }),
   toHex,
+  props: {
+    MuiButtonBase: {
+      disableRipple: true, // No more ripple, on the whole application 💣!
+    },
+  },
   overrides: {
     MuiCssBaseline: {
       '@global': {
@@ -103,6 +109,15 @@ const theme = createMuiTheme({
           userSelect: 'none',
         },
         body: {},
+      },
+    },
+    MuiMenuItem: {
+      root: {
+        transition: 'background-color 0.2s ease-in-out',
+        backgroundColor: 'transparent',
+        '&:hover': {
+          transitionDuration: '0s',
+        },
       },
     },
   },
