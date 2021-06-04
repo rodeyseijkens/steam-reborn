@@ -1,0 +1,12 @@
+appId: com.steamreborn.app
+productName: Steam Reborn
+copyright: Copyright © 2021 Rodey Seijkens
+directories:
+  output: dist
+  buildResources: resources
+files:
+  - from: .
+    filter:
+      - package.json
+      - app
+publish: null

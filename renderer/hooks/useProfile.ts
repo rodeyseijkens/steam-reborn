@@ -1,6 +1,6 @@
 import { useQuery, UseQueryOptions } from 'react-query';
 
-import profile from '../mock/profile.json';
+import profile from '../../mock/profile.json';
 import { ProfileProps } from '../types/Profile';
 
 const getProfileData = async () => {

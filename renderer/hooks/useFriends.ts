@@ -1,6 +1,6 @@
 import { useQuery } from 'react-query';
 
-import friends from '../mock/friends.json';
+import friends from '../../mock/friends.json';
 import { FriendListProfileProps } from '../types/FriendListProfile';
 
 const getFriendsData = async () => {

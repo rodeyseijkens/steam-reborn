@@ -9,8 +9,10 @@
 /coverage
 
 # next.js
-/.next/
-/out/
+.next
+out
+app
+dist
 
 # production
 /build
@@ -23,6 +25,7 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+*.log
 
 # local env files
 .env.local
@@ -34,8 +37,6 @@ yarn-error.log*
 .vercel
 
 # vscode
-.history
-.vscode
 
 # CI
 junit.xml

@@ -24,7 +24,6 @@ export default function MyApp(props: AppProps) {
   return (
     <>
       <Head>
-        <title>Steam Reborn</title>
         <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
       </Head>
       <QueryClientProvider client={queryClient}>
